@@ -1,0 +1,13 @@
+{% extends "movieapp/layout.html" %}
+{% load static %}
+{%block script%}
+<script src="{% static 'movieapp/watchlist.js' %}"></script>
+{%endblock%}
+{%block body%}
+<form id="search" action="{% url 'search' %}">
+    <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+    <button type="submit"><i class="material-icons">search</i></button>
+</form>
+<h2 style="margin-left: 30px;">Watchlist:</h2>
+<div id="movies"></div>
+{%endblock%}

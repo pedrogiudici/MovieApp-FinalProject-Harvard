@@ -1,0 +1,62 @@
+{% extends "movieapp/layout.html" %}
+{% load static %}
+{%block script%}
+<script src="{% static 'movieapp/movie.js' %}"></script>
+{%endblock%}
+
+{%block body%}
+<form id="search" action="{% url 'search' %}">
+    <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+    <button type="submit"><i class="material-icons">search</i></button>
+</form>
+<div class="movieun">
+    <div hidden id="id">{{movieid}}</div>
+    <img id="poster">
+    <div class="divtext">
+        <h2 id="title"></h2>
+        <h6 id="tagline"></h6>
+        <p id="overview"></p>
+        {%if user.is_authenticated%}
+        {%if addto%}
+        <button id="watchlist" class="submit">Add to Watchlist</button>
+        {%else%}
+        <button id="watchlist" class="submit">Remove from Watchlist</button>
+        {%endif%}
+        {%endif%}
+        <h5 id="genres" style="margin-top: 20px;">
+            Genres:
+        </h5>
+        <h5 id="rating">Rating:
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </h5>
+        <div class="details">
+            <div id="releasedate"><i class="material-icons">schedule</i> Release date: </div>
+            <div id="duration"><i class="material-icons">history</i> Duration: </div>
+        </div>
+        <h6 id="homepagetext">Homepage: <a id="homepage" href="" target="_blank"></a></h6>
+    </div>
+</div>
+<h3 style="margin-left: 25px;" id="comments">Reviews</h3>
+{%if user.is_authenticated%}
+<form id="rateform" action="{% url 'comments' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{movieid}}">
+    <input type="number" max="10" min="0" name="rate" id="rate" required> /10
+    <textarea id="textarearate" class="form-control" name="comment" rows="5" placeholder="Comment"></textarea>
+    <input type="submit" class="submit" id="ratesubmit">
+</form>
+{%endif%}
+{%for comment in moviecomments%}
+<div class="comments" style="display: none;">
+    <h5>Rate: {{comment.rate}}</h5>
+    <div class="timestamp">{{comment.timestamp}}</div>
+    <hr>
+    <p>{{comment.comment}}</p>
+</div>
+{%endfor%}
+<div id="loadmorediv"></div>
+<h3 style="margin-left: 25px;" id="recommendations">Recommendations</h3>
+<div id="movies"></div>
+{%endblock%}

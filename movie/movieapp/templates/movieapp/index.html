@@ -1,0 +1,20 @@
+{% extends "movieapp/layout.html" %}
+{% load static %}
+{%block script%}
+<script src="{% static 'movieapp/js.js' %}"></script>
+{%endblock%}
+{%block body%}
+<div id="indexbs">
+  <div class="btn-group" role="group">
+      <button data-category="popular" type="button" id="a" class="btn btn-outline-secondary">Popular</button>
+      <button data-category="now_playing" type="button" id="b" class="btn btn-outline-secondary">Now Playing</button>
+      <button data-category="top_rated" type="button" id="c" class="btn btn-outline-secondary">Top rated</button>
+      <button data-category="upcoming" type="button" id="d" class="btn btn-outline-secondary">Upcoming</button>
+  </div>
+  <form id="search" action="{% url 'search' %}">
+    <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+    <button type="submit"><i class="material-icons">search</i></button>
+  </form>
+</div>
+<div id="movies"></div>
+{%endblock%}
